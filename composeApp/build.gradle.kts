@@ -5,10 +5,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.kotlin.compose)
 }
 
 kotlin {
@@ -105,6 +105,7 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    implementation(projects.base)
 }
 
 compose.desktop {
