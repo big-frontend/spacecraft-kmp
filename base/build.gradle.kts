@@ -120,7 +120,7 @@ kotlin {
         appleMain {
             dependencies {
                 api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
-                api("io.ktor:ktor-client-darwin:3.0.4")
+//                api("io.ktor:ktor-client-darwin:3.0.4")
             }
         }
         val desktopMain by getting {

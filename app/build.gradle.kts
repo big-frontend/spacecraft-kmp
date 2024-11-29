@@ -106,6 +106,8 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
     implementation(projects.base)
+    implementation(projects.modules.aModule)
+    implementation(projects.modules.bModule)
 }
 
 compose.desktop {
