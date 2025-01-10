@@ -107,6 +107,8 @@ kotlin {
             api("io.coil-kt.coil3:coil-compose:3.0.4")
             api("io.coil-kt.coil3:coil-svg:3.0.4")
             api("io.coil-kt.coil3:coil-compose:3.0.4")
+//            implementation("com.otaliastudios.opengl:egloo-multiplatform:0.6.1")
+
         }
         androidMain.dependencies {
             api("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
@@ -134,24 +136,25 @@ kotlin {
 
             }
         }
+        wasmJsMain {
+            dependencies {
+                api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
+            }
+        }
         jvmMain {
             dependencies {
                 api("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
                 api(libs.kotlinx.coroutines.swing)
             }
         }
-        wasmJsMain {
-            dependencies {
-                api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
-            }
-        }
+
 
 
     }
 }
 
 android {
-    namespace = "com.spacecraft.kmp.base"
+    namespace = "com.electrolytej.kmp.base"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()

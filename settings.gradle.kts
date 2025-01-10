@@ -30,5 +30,5 @@ dependencyResolutionManagement {
 
 include(":app")
 include(":base")
-include(":modules:a-module")
-include(":modules:b-module")
+include(":modules:main-module")
+include(":modules:ad-module")

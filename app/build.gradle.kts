@@ -77,11 +77,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.spacecraft.kmp"
+    namespace = "com.electrolytej.kmp"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.spacecraft.kmp"
+        applicationId = "com.electrolytej.kmp"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -106,17 +106,17 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
     implementation(projects.base)
-    implementation(projects.modules.aModule)
+    implementation(projects.modules.mainModule)
     implementation(projects.modules.bModule)
 }
 
 compose.desktop {
     application {
-        mainClass = "com.spacecraft.kmp.MainKt"
+        mainClass = "com.electrolytej.kmp.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.spacecraft.kmp"
+            packageName = "com.electrolytej.kmp"
             packageVersion = "1.0.0"
         }
     }
