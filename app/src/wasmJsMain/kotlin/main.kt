@@ -1,7 +1,6 @@
-package com.electrolytej.kmp
-
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
+import com.electrolytej.main.App
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)

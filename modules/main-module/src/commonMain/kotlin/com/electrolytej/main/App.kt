@@ -1,4 +1,5 @@
 package com.electrolytej.main
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -14,8 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.painterResource
-import spacecraft_kmp.base.generated.resources.Res
-import spacecraft_kmp.base.generated.resources.compose_multiplatform
+import spacecraft_kmp.modules.main_module.generated.resources.Res
+import spacecraft_kmp.modules.main_module.generated.resources.compose_multiplatform
 
 @Composable
 fun App() {

@@ -25,7 +25,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "SpacecraftKmpApp"
             isStatic = true
         }
     }
@@ -34,12 +34,12 @@ kotlin {
     
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        moduleName = "spacecraftKmpApp"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
-                outputFileName = "composeApp.js"
+                outputFileName = "spacecraftKmpApp.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
@@ -57,6 +57,7 @@ kotlin {
         
         androidMain.dependencies {
             implementation(compose.preview)
+//            debugImplementation(compose.uiTooling)
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
@@ -68,6 +69,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+//            implementation(projects.base)
+            implementation(projects.modules.mainModule)
+            implementation(projects.modules.adModule)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -103,16 +107,9 @@ android {
     }
 }
 
-dependencies {
-    debugImplementation(compose.uiTooling)
-    implementation(projects.base)
-    implementation(projects.modules.mainModule)
-    implementation(projects.modules.bModule)
-}
-
 compose.desktop {
     application {
-        mainClass = "com.electrolytej.kmp.MainKt"
+        mainClass = "MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)

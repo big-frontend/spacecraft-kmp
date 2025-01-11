@@ -1,5 +1,6 @@
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -47,10 +48,9 @@ kotlin {
 //        }
 //    }
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
 //    linuxX64() {
@@ -92,11 +92,34 @@ kotlin {
 //            }
 //        }
 //    }
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "base-module"
+            isStatic = true
+        }
+    }
     jvm("desktop")
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    wasmJs {
+        browser {
+            val rootDirPath = project.rootDir.path
+            val projectDirPath = project.projectDir.path
+            commonWebpackConfig {
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(rootDirPath)
+                        add(projectDirPath)
+                    }
+                }
+            }
+        }
+        binaries.library()
+    }
     sourceSets {
         commonMain.dependencies {
             api(compose.runtime)
@@ -104,11 +127,13 @@ kotlin {
             api(compose.material)
             api(compose.ui)
             api(compose.components.resources)
+            api(compose.components.uiToolingPreview)
+            api(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.runtime.compose)
             api("io.coil-kt.coil3:coil-compose:3.0.4")
             api("io.coil-kt.coil3:coil-svg:3.0.4")
             api("io.coil-kt.coil3:coil-compose:3.0.4")
 //            implementation("com.otaliastudios.opengl:egloo-multiplatform:0.6.1")
-
         }
         androidMain.dependencies {
             api("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
@@ -130,12 +155,12 @@ kotlin {
 
             }
         }
-        jsMain {
-            dependencies {
-                api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
-
-            }
-        }
+//        jsMain {
+//            dependencies {
+//                api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
+//
+//            }
+//        }
         wasmJsMain {
             dependencies {
                 api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
