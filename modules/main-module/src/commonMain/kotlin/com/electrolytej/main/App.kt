@@ -1,38 +1,46 @@
 package com.electrolytej.main
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import spacecraft_kmp.modules.main_module.generated.resources.Res
-import spacecraft_kmp.modules.main_module.generated.resources.compose_multiplatform
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
+import com.electrolytej.main.page.splash.SplashScreen
+import com.electrolytej.main.page.welcome.WelcomeScreen
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.NavHost
+import com.electrolytej.main.page.home.HomeScreen
 
 @Composable
-fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        val greeting = remember { Greeting().greet() }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
+@Preview
+fun App(
+    viewModel: AppViewModel = viewModel { AppViewModel() },
+) {
+    val controller = rememberNavController()
+    NavHost(
+        navController = controller,
+        startDestination = "splash",
+        enterTransition = {
+            EnterTransition.None
+        },
+        exitTransition = {
+            ExitTransition.None
+        },
+    ) {
+        composable("splash") {
+            SplashScreen(controller)
+        }
+        composable("home") {
+            HomeScreen(controller)
+        }
+        composable("welcome") {
+            WelcomeScreen(controller)
         }
     }
+}
+
+class AppViewModel : ViewModel() {
+
 }

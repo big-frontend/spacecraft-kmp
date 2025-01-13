@@ -130,9 +130,10 @@ kotlin {
             api(compose.components.uiToolingPreview)
             api(libs.androidx.lifecycle.viewmodel)
             api(libs.androidx.lifecycle.runtime.compose)
+            implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
+            api("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha07")
             api("io.coil-kt.coil3:coil-compose:3.0.4")
             api("io.coil-kt.coil3:coil-svg:3.0.4")
-            api("io.coil-kt.coil3:coil-compose:3.0.4")
 //            implementation("com.otaliastudios.opengl:egloo-multiplatform:0.6.1")
         }
         androidMain.dependencies {
