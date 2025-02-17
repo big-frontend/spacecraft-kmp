@@ -2,7 +2,7 @@
 
 
 ## ios
-`:app:run`
+`:app:iosArm64Binaries`
 
 ## android
 `:app:installDebug`
