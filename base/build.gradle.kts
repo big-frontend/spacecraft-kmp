@@ -98,7 +98,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "base-module"
+            baseName = "Base"
             isStatic = true
         }
     }
