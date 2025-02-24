@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import Base
+import SpacecraftKmpApp
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
