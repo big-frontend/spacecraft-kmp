@@ -167,12 +167,12 @@ kotlin {
                 api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
             }
         }
-        jvmMain {
-            dependencies {
-                api("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
-                api(libs.kotlinx.coroutines.swing)
-            }
-        }
+//        jvmMain {
+//            dependencies {
+//                api("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
+//                api(libs.kotlinx.coroutines.swing)
+//            }
+//        }
 
 
 
