@@ -1,4 +1,4 @@
-name: Build Kmp app
+name: code-review
 
 on:
   push:
