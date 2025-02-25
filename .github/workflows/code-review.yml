@@ -24,6 +24,11 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_15.3.app/Contents/Developer
       - name: iOS debug build
         run: cd iosApp && xcodebuild -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,OS=latest,name=iPhone 15' CODE_SIGNING_ALLOWED='NO'
+      # - name: Upload APK
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: App.apk
+      #     path: app/build/outputs/apk/debug/app-debug.apk
 
 
   kmp-android:
@@ -41,3 +46,8 @@ jobs:
           java-version: 21
       - name: Kmp Android debug build
         run: ./gradlew assembleDebug --stacktrace
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: kmp-android.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
