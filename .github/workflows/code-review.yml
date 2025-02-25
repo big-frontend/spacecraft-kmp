@@ -24,11 +24,11 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_15.3.app/Contents/Developer
       - name: iOS debug build
         run: cd iosApp && xcodebuild -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,OS=latest,name=iPhone 15' CODE_SIGNING_ALLOWED='NO'
-      # - name: Upload APK
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: App.apk
-      #     path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: kmp-ios.app
+          path: /Users/runner/Library/Developer/Xcode/DerivedData/iosApp-guppqqfdhdiftkfglvxojxmqinzi/Build/Products/Debug-iphonesimulator/spacecraft-kmp.app
 
 
   kmp-android:
