@@ -24,7 +24,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "main-module"
+            baseName = "MainModule"
             isStatic = true
         }
     }

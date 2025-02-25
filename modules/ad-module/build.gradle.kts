@@ -22,7 +22,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "ad-module"
+            baseName = "AdModule"
             isStatic = true
         }
     }
