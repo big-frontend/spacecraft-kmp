@@ -31,6 +31,12 @@
 - [蒲公英分发](https://www.pgyer.com/manager/dashboard/app/747e76f865ef67134972fc6e54b7edbd)
 - [firebase app distribution](https://console.firebase.google.com/project/spacecraft-22dc1/appdistribution/app/android:com.electrolytej.pisces/releases?hl=zh-cn)
 
+
+打 tag 自动发布到应用市场
+- app 发布：国内hmov、海外 google play
+- web 网页发布：Railway、netlify、firbase hosting、github/gitlab page
+
+
 ## 5.性能与稳定性监控
 
 
