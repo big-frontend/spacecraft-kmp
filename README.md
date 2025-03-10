@@ -33,7 +33,7 @@
 
 
 打 tag 自动发布到应用市场
-- app 发布：国内hmov、海外 google play
+- app 发布：国内hmov、海外 google play、apple store
 - web 网页发布：Railway、netlify、firbase hosting、github/gitlab page
 
 
