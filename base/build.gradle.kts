@@ -122,6 +122,7 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
+            api("androidx.annotation:annotation:1.9.1")
             api(compose.runtime)
             api(compose.foundation)
             api(compose.material)
@@ -135,6 +136,11 @@ kotlin {
             api("io.coil-kt.coil3:coil-compose:3.0.4")
             api("io.coil-kt.coil3:coil-svg:3.0.4")
 //            implementation("com.otaliastudios.opengl:egloo-multiplatform:0.6.1")
+            api(libs.ktor.client.core)
+            api(libs.ktor.client.logging)
+            api(libs.ktor.client.content.negotiation)
+            api(libs.ktor.serialization.kotlinx.json)
+            api(libs.ktor.serialization.kotlinx.protobuf)
         }
         androidMain.dependencies {
             api("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
@@ -144,16 +150,21 @@ kotlin {
             api(libs.androidx.compose.ui.tooling.preview)
             api(libs.androidx.activity.compose)
             api("androidx.databinding:viewbinding:8.1.4")
+//            implementation(libs.ktor.client.okhttp)
+            api(libs.ktor.client.android)
+            api(libs.kotlinx.coroutines.android)
         }
         appleMain {
             dependencies {
                 api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
-//                api("io.ktor:ktor-client-darwin:3.0.4")
+                implementation(libs.ktor.client.darwin)
             }
         }
         val desktopMain by getting {
             dependencies {
-
+                api(libs.ktor.client.cio)
+                api("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha07")
+                api(libs.kotlinx.coroutines.swing)
             }
         }
 //        jsMain {
@@ -165,6 +176,7 @@ kotlin {
         wasmJsMain {
             dependencies {
                 api("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
+                api(libs.ktor.client.wasm)
             }
         }
 //        jvmMain {
@@ -173,9 +185,6 @@ kotlin {
 //                api(libs.kotlinx.coroutines.swing)
 //            }
 //        }
-
-
-
     }
 }
 

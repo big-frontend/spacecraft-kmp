@@ -1,5 +1,7 @@
 package com.electrolytej.main
 
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {
@@ -7,3 +9,8 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
+
+@Composable
+actual fun getWebScreen(controller: NavController){
+
+}

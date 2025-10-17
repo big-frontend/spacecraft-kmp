@@ -11,6 +11,7 @@ pluginManagement {
             }
         }
         mavenCentral()
+        maven("https://jogamp.org/deployment/maven")
         gradlePluginPortal()
     }
 }
@@ -25,6 +26,7 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        maven("https://jogamp.org/deployment/maven")
     }
 }
 
@@ -32,3 +34,4 @@ include(":app")
 include(":base")
 include(":modules:main-module")
 include(":modules:ad-module")
+include(":modules:web-module")

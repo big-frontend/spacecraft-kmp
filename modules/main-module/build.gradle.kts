@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -49,7 +50,6 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
             implementation(projects.base)
             api(compose.runtime)
             api(compose.foundation)
@@ -63,11 +63,20 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+        iosMain.dependencies {
+            implementation(projects.modules.webModule)
+        }
+        androidMain.dependencies {
+            implementation(projects.modules.webModule)
+        }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
+                implementation(projects.modules.webModule)
+                implementation(libs.androidx.navigation.runtime.desktop)
             }
         }
+
     }
 }
 

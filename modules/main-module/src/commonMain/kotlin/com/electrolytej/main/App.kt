@@ -38,6 +38,10 @@ fun App(
         composable("welcome") {
             WelcomeScreen(controller)
         }
+        composable("web") {
+            getWebScreen(controller)
+        }
+
     }
 }
 
