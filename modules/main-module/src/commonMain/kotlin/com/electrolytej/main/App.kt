@@ -41,7 +41,6 @@ fun App(
         composable("web") {
             getWebScreen(controller)
         }
-
     }
 }
 

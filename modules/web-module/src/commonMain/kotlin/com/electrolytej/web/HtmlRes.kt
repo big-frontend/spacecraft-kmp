@@ -1,4 +1,5 @@
 package com.electrolytej.web
+
 val html =
     """
         <html>

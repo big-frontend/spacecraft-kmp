@@ -10,94 +10,18 @@ plugins {
 }
 
 kotlin {
-//    val hostOs = System.getProperty("os.name")
-//    val isArm64 = System.getProperty("os.arch") == "aarch64"
-//    val isMingwX64 = hostOs.startsWith("Windows")
-//    val nativeTarget = when {
-//        hostOs == "Mac OS X" && isArm64 -> macosArm64("native")
-//        hostOs == "Mac OS X" && !isArm64 -> macosX64("native")
-//        hostOs == "Linux" && isArm64 -> linuxArm64("native")
-//        hostOs == "Linux" && !isArm64 -> linuxX64("native")
-//        isMingwX64 -> mingwX64("native")
-//        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-//    }
-//
-//    nativeTarget.apply {
-//        compilations.getByName("main") {
-//            cinterops {
-//                val libcurl by creating {
-//                    defFile(project.file("src/nativeInterop/cinterop/libcurl.def"))
-//                    packageName("com.spacecraft.kmp")
-//                    compilerOpts("-I/path")
-//                    includeDirs.allHeaders("path")
-//                }
-//            }
-//        }
-//        binaries {
-//            executable {
-//                entryPoint = "main"
-//            }
-//        }
-//    }
-    //指定main函数入口
-//    fun KotlinNativeTarget.config() {
-//        binaries {
-//            executable {
-//                entryPoint = "main"
-//            }
-//        }
-//    }
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-//    linuxX64() {
-//        val main by compilations.getting {
-//            cinterops {
-//                val libcurl by creating {
-//                    defFile(project.file("src/nativeInterop/cinterop/libcurl.def"))
-////                    packageName("com.spacecraft.kmp")
-//                    compilerOpts("-I/src/nativeInterop/cinterop/")
-//                    includeDirs.allHeaders("src/nativeInterop/cinterop/")
-//                }
-//            }
-//        }
-//        binaries {
-//            executable {
-//                entryPoint = "main"
-//            }
-//        }
-//    }
-//    mingwX64() // on Windows
-//    macosX64() { // on macOS
-//        binaries {
-//            executable()
-//        }
-//    }
-//    androidNativeArm64()
-//    androidNativeArm32 {
-//        binaries {
-//            sharedLib("aa", listOf(RELEASE))
-//        }
-//        compilations.getByName("main") {
-//            cinterops {
-//                val libcurl by creating {
-//                    defFile(project.file("src/nativeInterop/cinterop/libcurl.def"))
-//                    packageName("com.spacecraft.kmp")
-//                    compilerOpts("-I/path")
-//                    includeDirs.allHeaders("path")
-//                }
-//            }
-//        }
-//    }
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = "Base"
             isStatic = true
         }
@@ -135,12 +59,12 @@ kotlin {
             api("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha07")
             api("io.coil-kt.coil3:coil-compose:3.0.4")
             api("io.coil-kt.coil3:coil-svg:3.0.4")
-//            implementation("com.otaliastudios.opengl:egloo-multiplatform:0.6.1")
             api(libs.ktor.client.core)
             api(libs.ktor.client.logging)
             api(libs.ktor.client.content.negotiation)
             api(libs.ktor.serialization.kotlinx.json)
             api(libs.ktor.serialization.kotlinx.protobuf)
+            api(libs.kermit)
         }
         androidMain.dependencies {
             api("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
@@ -153,6 +77,9 @@ kotlin {
 //            implementation(libs.ktor.client.okhttp)
             api(libs.ktor.client.android)
             api(libs.kotlinx.coroutines.android)
+            implementation("androidx.graphics:graphics-core:1.0.3")
+            implementation("androidx.graphics:graphics-path:1.1.0-alpha01")
+            implementation("androidx.graphics:graphics-shapes:1.1.0")
         }
         appleMain {
             dependencies {
@@ -185,6 +112,8 @@ kotlin {
 //                api(libs.kotlinx.coroutines.swing)
 //            }
 //        }
+
+
     }
 }
 

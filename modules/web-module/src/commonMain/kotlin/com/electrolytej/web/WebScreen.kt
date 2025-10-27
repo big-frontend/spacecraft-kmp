@@ -21,32 +21,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import co.touchlab.kermit.Logger
 import com.electrolytej.web.eventbus.FlowEventBus
 import com.electrolytej.web.eventbus.NavigationEvent
-import com.multiplatform.webview.jsbridge.IJsMessageHandler
-import com.multiplatform.webview.jsbridge.JsMessage
 import com.multiplatform.webview.jsbridge.WebViewJsBridge
-import com.multiplatform.webview.jsbridge.dataToJsonString
-import com.multiplatform.webview.jsbridge.processParams
 import com.multiplatform.webview.jsbridge.rememberWebViewJsBridge
 import com.multiplatform.webview.util.KLogSeverity
 import com.multiplatform.webview.web.WebView
-import com.multiplatform.webview.web.WebViewNavigator
 import com.multiplatform.webview.web.WebViewState
 import com.multiplatform.webview.web.rememberWebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewState
-import com.multiplatform.webview.web.rememberWebViewStateWithHTMLData
 import com.multiplatform.webview.web.rememberWebViewStateWithHTMLFile
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.launch
 
 
 @Composable
 fun WebScreen(controller: NavController) {
     var webViewState = rememberWebViewStateWithHTMLFile("index.html")
 //    webViewState = rememberWebViewStateWithHTMLData(html)
-    webViewState = rememberWebViewState("https://accounts.moecube.com/signin?return_sso_url=https%3A%2F%2Faccounts.moecube.com%2Fmatch")
-    val webViewNavigator = rememberWebViewNavigator()
+    webViewState =
+        rememberWebViewState("https://accounts.moecube.com/signin?return_sso_url=https%3A%2F%2Faccounts.moecube.com%2Fmatch")
+    val webViewNavigator = rememberWebViewNavigator(requestInterceptor = MyRequestInterceptor())
     val jsBridge = rememberWebViewJsBridge(webViewNavigator)
     var jsRes by mutableStateOf("Evaluate JavaScript")
     LaunchedEffect(Unit) {
@@ -72,10 +67,10 @@ fun WebScreen(controller: NavController) {
             Box(Modifier.fillMaxSize()) {
                 WebView(
                     state = webViewState,
-//                    modifier = Modifier.fillMaxSize(),
-//                    captureBackPresses = false,
-//                    navigator = webViewNavigator,
-//                    webViewJsBridge = jsBridge,
+                    modifier = Modifier.fillMaxSize(),
+                    captureBackPresses = false,
+                    navigator = webViewNavigator,
+                    webViewJsBridge = jsBridge,
                 )
                 Button(
                     onClick = {
@@ -126,27 +121,6 @@ suspend fun initJsBridge(webViewJsBridge: WebViewJsBridge) {
 //        }
 //    }
     FlowEventBus.events.filter { it is NavigationEvent }.collect {
-//        Logger.d { "Received eventbus.NavigationEvent" }
-    }
-}
-
-class GreetJsMessageHandler : IJsMessageHandler {
-    override fun methodName(): String {
-        return "Greet"
-    }
-
-    override fun handle(
-        message: JsMessage,
-        navigator: WebViewNavigator?,
-        callback: (String) -> Unit,
-    ) {
-//        Logger.i { "Greet Handler Get Message: $message" }
-        val param = processParams<GreetModel>(message)
-        val data = GreetModel("KMM Received ${param.message}")
-        callback(dataToJsonString(data))
-//        EventBus.post(eventbus.NavigationEvent())
-        navigator?.coroutineScope?.launch {
-            FlowEventBus.publishEvent(NavigationEvent())
-        }
+        Logger.d { "Received eventbus.NavigationEvent" }
     }
 }

@@ -64,15 +64,15 @@ kotlin {
             implementation(libs.kotlin.test)
         }
         iosMain.dependencies {
-            implementation(projects.modules.webModule)
+            api(projects.modules.webModule)
         }
         androidMain.dependencies {
-            implementation(projects.modules.webModule)
+            api(projects.modules.webModule)
         }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
-                implementation(projects.modules.webModule)
+                api(projects.modules.webModule)
                 implementation(libs.androidx.navigation.runtime.desktop)
             }
         }

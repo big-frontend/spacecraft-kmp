@@ -34,7 +34,7 @@ kotlin {
     
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "spacecraftKmpApp"
+//        moduleName = "spacecraftKmpApp"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
@@ -71,7 +71,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
 //            implementation(projects.base)
             implementation(projects.modules.mainModule)
-            implementation(projects.modules.adModule)
+//            implementation(projects.modules.adModule)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -115,6 +115,18 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.electrolytej.kmp"
             packageVersion = "1.0.0"
+        }
+    }
+}
+afterEvaluate {
+    tasks.withType<JavaExec> {
+        jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+        jvmArgs("--add-opens", "java.desktop/java.awt.peer=ALL-UNNAMED")
+
+        if (System.getProperty("os.name").contains("Mac")) {
+            jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED")
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED")
         }
     }
 }

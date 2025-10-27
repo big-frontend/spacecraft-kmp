@@ -2,7 +2,7 @@
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-ktor = "2.3.7"
+ktor = "3.3.1"
 accompanist = "0.34.0"
 androidDesugarJdkLibs = "2.0.4"
 # AGP and tools should be updated together
@@ -46,7 +46,7 @@ hilt = "2.51.1"
 hiltExt = "1.1.0"
 jacoco = "0.8.7"
 junit4 = "4.13.2"
-kotlin = "2.0.21"
+kotlin = "2.2.21"
 kotlinxCoroutines = "1.9.0"
 kotlinxDatetime = "0.5.0"
 kotlinxSerializationJson = "1.6.3"
@@ -76,8 +76,11 @@ webview = "1.9.8"
 navigationRuntimeDesktop = "2.9.0-beta01"
 #webview = "2.0.3"
 sqlDelight = "2.1.0"
+junit = "1.3.0"
+
 
 [libraries]
+kermit = "co.touchlab:kermit:2.0.3"
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
@@ -202,6 +205,7 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
 javassist = { group = "org.javassist", name = "javassist", version.ref = "javassist" }
 electrolytej-baseplugin = { group = "io.github.jamesfchen", name = "base-plugin", version.ref = "electrolytejBasePlugin" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -227,6 +231,7 @@ room = { id = "androidx.room", version.ref = "room" }
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [bundles]
 ktor-common = ["ktor-client-core", "ktor-client-logging", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-protobuf", "ktor-serialization-kotlinx-json"]
