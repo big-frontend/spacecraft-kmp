@@ -21,14 +21,49 @@ jobs:
           distribution: 'zulu'
           java-version: 21
       - name: Set Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_15.3.app/Contents/Developer
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Current developer dir:"
+          xcode-select -p || true
+
+          echo "Installed Xcode apps under /Applications:"
+          ls -1 /Applications | grep -E '^Xcode.*\.app$' || true
+
+          # Prefer a specific version if present, otherwise pick the newest Xcode*.app
+          if [ -d /Applications/Xcode_15.3.app/Contents/Developer ]; then
+            sudo xcode-select -s /Applications/Xcode_15.3.app/Contents/Developer
+          else
+            XCODE_APP="$(ls -1d /Applications/Xcode*.app 2>/dev/null | sort -V | tail -n 1 || true)"
+            if [ -n "${XCODE_APP}" ] && [ -d "${XCODE_APP}/Contents/Developer" ]; then
+              sudo xcode-select -s "${XCODE_APP}/Contents/Developer"
+            else
+              echo "No Xcode found under /Applications"
+              exit 1
+            fi
+          fi
+
+          echo "Selected developer dir:"
+          xcode-select -p
+          xcodebuild -version
+
       - name: iOS debug build
-        run: cd iosApp && xcodebuild -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,OS=latest,name=iPhone 15' CODE_SIGNING_ALLOWED='NO'
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd iosApp
+          xcodebuild \
+            -scheme iosApp \
+            -configuration Debug \
+            -destination 'platform=iOS Simulator,OS=latest,name=iPhone 15' \
+            CODE_SIGNING_ALLOWED='NO'
+
       - name: Upload App
         uses: actions/upload-artifact@v4
         with:
           name: kmp-ios.app
-          path: /Users/runner/Library/Developer/Xcode/DerivedData/iosApp-guppqqfdhdiftkfglvxojxmqinzi/Build/Products/Debug-iphonesimulator/spacecraft-kmp.app
+          path: '**/Build/Products/Debug-iphonesimulator/*.app'
 
 
   kmp-android:
