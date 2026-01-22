@@ -15,11 +15,13 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: 21
+
       - name: Set Xcode version
         shell: bash
         run: |
@@ -53,10 +55,42 @@ jobs:
         run: |
           set -euo pipefail
           cd iosApp
+
+          echo "Available destinations for scheme (debugging):"
+          xcodebuild -scheme iosApp -showdestinations | cat
+
+          # Pick an available iOS Simulator destination from -showdestinations output.
+          # Prefer iPhone simulators, then fall back to any iOS Simulator.
+          DEST_RAW="$(
+            xcodebuild -scheme iosApp -showdestinations |
+              grep -E '\{ platform:iOS Simulator' |
+              grep -v 'placeholder' |
+              (grep -i 'name:iPhone' || true) |
+              head -n 1 || true
+          )"
+
+          if [ -z "${DEST_RAW}" ]; then
+            DEST_RAW="$(
+              xcodebuild -scheme iosApp -showdestinations |
+                grep -E '\{ platform:iOS Simulator' |
+                grep -v 'placeholder' |
+                head -n 1 || true
+            )"
+          fi
+
+          if [ -z "${DEST_RAW}" ]; then
+            echo "No concrete iOS Simulator destination found for scheme iosApp."
+            exit 1
+          fi
+
+          # Convert "{ platform:iOS Simulator, ... }" into "platform=iOS Simulator,..." for -destination
+          DEST="$(echo "${DEST_RAW}" | sed -E 's/^\{[[:space:]]*//; s/[[:space:]]*\}$//; s/, /,/g; s/:/=/g')"
+          echo "Using destination: ${DEST}"
+
           xcodebuild \
             -scheme iosApp \
             -configuration Debug \
-            -destination 'platform=iOS Simulator,OS=latest,name=iPhone 15' \
+            -destination "${DEST}" \
             CODE_SIGNING_ALLOWED='NO'
 
       - name: Upload App
