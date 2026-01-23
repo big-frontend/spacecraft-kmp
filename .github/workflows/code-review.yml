@@ -56,42 +56,35 @@ jobs:
           set -euo pipefail
           cd iosApp
 
-          echo "Available destinations for scheme (debugging):"
-          xcodebuild -scheme iosApp -showdestinations | cat
+          echo "Xcode:"
+          xcodebuild -version
 
-          # Pick an available iOS Simulator destination from -showdestinations output.
-          # Prefer iPhone simulators, then fall back to any iOS Simulator.
-          DEST_RAW="$(
-            xcodebuild -scheme iosApp -showdestinations |
-              grep -E '\{ platform:iOS Simulator' |
-              grep -v 'placeholder' |
-              (grep -i 'name:iPhone' || true) |
-              head -n 1 || true
-          )"
-
-          if [ -z "${DEST_RAW}" ]; then
-            DEST_RAW="$(
-              xcodebuild -scheme iosApp -showdestinations |
-                grep -E '\{ platform:iOS Simulator' |
-                grep -v 'placeholder' |
-                head -n 1 || true
-            )"
-          fi
-
-          if [ -z "${DEST_RAW}" ]; then
-            echo "No concrete iOS Simulator destination found for scheme iosApp."
+          echo "Listing schemes (diagnostics):"
+          if [ -f "iosApp.xcworkspace/contents.xcworkspacedata" ]; then
+            xcodebuild -list -workspace iosApp.xcworkspace | cat
+            BUILD_CONTAINER=(-workspace iosApp.xcworkspace)
+          elif [ -f "iosApp.xcodeproj/project.pbxproj" ]; then
+            xcodebuild -list -project iosApp.xcodeproj | cat
+            BUILD_CONTAINER=(-project iosApp.xcodeproj)
+          else
+            echo "No .xcworkspace or .xcodeproj found under iosApp/"
+            ls -la | cat
             exit 1
           fi
 
-          # Convert "{ platform:iOS Simulator, ... }" into "platform=iOS Simulator,..." for -destination
-          DEST="$(echo "${DEST_RAW}" | sed -E 's/^\{[[:space:]]*//; s/[[:space:]]*\}$//; s/, /,/g; s/:/=/g')"
+          echo "Show destinations (diagnostics):"
+          xcodebuild "${BUILD_CONTAINER[@]}" -scheme iosApp -showdestinations | cat || true
+
+          # Use a generic iOS Simulator destination to avoid device-name mismatches in CI.
+          DEST="generic/platform=iOS Simulator"
           echo "Using destination: ${DEST}"
 
           xcodebuild \
+            "${BUILD_CONTAINER[@]}" \
             -scheme iosApp \
             -configuration Debug \
             -destination "${DEST}" \
-            CODE_SIGNING_ALLOWED='NO'
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Upload App
         uses: actions/upload-artifact@v4
