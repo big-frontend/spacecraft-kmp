@@ -68,6 +68,7 @@ kotlin {
             api(projects.modules.livestreamingModule)
         }
         androidMain.dependencies {
+            implementation(compose.uiTooling) // Added to fix ClassNotFoundException in Previews
             api(projects.modules.webModule)
             api(projects.modules.livestreamingModule)
         }

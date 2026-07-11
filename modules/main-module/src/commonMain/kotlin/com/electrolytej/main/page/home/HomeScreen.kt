@@ -27,6 +27,7 @@ import org.jetbrains.compose.resources.painterResource
 import spacecraft_kmp.modules.main_module.generated.resources.Res
 import spacecraft_kmp.modules.main_module.generated.resources.compose_multiplatform
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.electrolytej.main.network.api.AccountApi
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
@@ -35,7 +36,14 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.protobuf.protobuf
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    val controller = rememberNavController()
+    HomeScreen(controller)
+}
 @Composable
 fun HomeScreen(controller: NavController) {
     Scaffold(topBar = {

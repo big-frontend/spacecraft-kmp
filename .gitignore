@@ -18,3 +18,4 @@ captures
 **/xcshareddata/WorkspaceSettings.xcsettings
 app/cache
 app/kcef-bundle
+yarn.lock

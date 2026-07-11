@@ -1,0 +1,5 @@
+headers = vulkan/vulkan.h vulkan/vulkan_android.h
+headerFilter = vulkan/*
+package = com.electrolytej.vulkan
+compilerOpts.android = -DVK_USE_PLATFORM_ANDROID_KHR
+linkerOpts.android = -lvulkan -landroid -llog
