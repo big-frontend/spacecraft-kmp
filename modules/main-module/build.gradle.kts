@@ -65,15 +65,18 @@ kotlin {
         }
         iosMain.dependencies {
             api(projects.modules.webModule)
+            api(projects.modules.livestreamingModule)
         }
         androidMain.dependencies {
             api(projects.modules.webModule)
+            api(projects.modules.livestreamingModule)
         }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
-                api(projects.modules.webModule)
                 implementation(libs.androidx.navigation.runtime.desktop)
+                api(projects.modules.webModule)
+                api(projects.modules.livestreamingModule)
             }
         }
 

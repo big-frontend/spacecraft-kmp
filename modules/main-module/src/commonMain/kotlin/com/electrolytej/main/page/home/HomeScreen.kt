@@ -60,6 +60,7 @@ fun MyContent(controller: NavController) {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+
             Button(onClick = {
                 showContent = !showContent
                 runCatching {
